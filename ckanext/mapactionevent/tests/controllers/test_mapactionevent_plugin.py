@@ -56,6 +56,17 @@ def _get_group_index_page(app, group_type):
     return env, response
 
 
+def _get_group_read_page(app, group_type, group_id):
+    user = factories.User()
+    env = {'REMOTE_USER': user['name'].encode('ascii')}
+    # See ckan.plugins.register_group_plugins
+    response = app.get(
+        toolkit.url_for('%s_read' % group_type, id=group_id),
+        extra_environ=env,
+    )
+    return env, response
+
+
 def _get_new_event(user, **kwargs):
     return helpers.call_action(
         'event_create',
@@ -180,6 +191,24 @@ class TestEventGroupController(ControllerTestBase):
         assert_equals(titles, [event_2014['title'],
                                event_2010['title'],
                                event_2009['title']])
+
+    def test_default_dataset_sort_order_is_date(self):
+        user = factories.User()
+        event_2010 = _get_new_event(
+            user,
+            title='Albania Floods, January 2010',
+            created=datetime(2010, 1, 1),
+            name='albania-floods-2010')
+
+        app = self._get_test_app()
+        env, response = _get_group_read_page(app, 'event', event_2010['id'])
+
+        html = BeautifulSoup(response.body)
+
+        options = {o.attrs.get('value'): o.attrs.get('selected', False)
+                   for o in html.select('#field-order-by option')}
+
+        assert_true(options['metadata_modified desc'])
 
 
 class TestHomeController(ControllerTestBase):

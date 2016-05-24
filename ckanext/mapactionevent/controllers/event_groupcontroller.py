@@ -49,3 +49,8 @@ class EventGroupController(group.GroupController):
         except NotFound:
             abort(404, _('Group not found'))
         return self._render_template('mapactionevent/members.html', group_type)
+
+    def read(self, id, **kwargs):
+        import ipdb
+        ipdb.set_trace()
+        return super(EventGroupController, self).read(id, **kwargs)
