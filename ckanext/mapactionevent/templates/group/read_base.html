@@ -1,0 +1,15 @@
+{% ckan_extends %}
+
+{# Notes on the template overriding:
+
+See: https://stackoverflow.com/a/52942919
+And: https://docs.ckan.org/en/2.8/extensions/best-practices.html#avoid-name-clashes
+
+We want to customise the default group/snippets/info.html template to vary the group controller for our custom group type, so we must prefix the custom snippet with the plugin name so that it's unique for all the templates - or this plugin with alias the default and break other plugins trying to override them (we can't extend snippets the same way as over templates).
+
+#}
+
+
+{% block secondary_content %}
+  {% snippet "group/snippets/mapactionevent_info.html", group=c.group_dict, show_nums=true %}
+{% endblock %}
