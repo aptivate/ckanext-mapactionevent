@@ -70,9 +70,6 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
             controller='ckanext.mapactionevent.controllers.event_groupcontroller:EventGroupController',
             action='about')
 
-        map.redirect('/group', '/event')
-        map.redirect('/group/{url:.*}', '/event/{url}')
-
         return map
 
     # IActions
