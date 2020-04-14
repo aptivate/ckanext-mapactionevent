@@ -13,9 +13,6 @@ Example:
       {% endfor %}
     </ul>
 #}
-{#
-    group.type not set for some reason so wrongly defaults to group
-#}
 {% set type = group.type or 'group' %}
 {% set url = h.url_for(type ~ '_read', action='read', id=group.name) %}
 {% block item %}
