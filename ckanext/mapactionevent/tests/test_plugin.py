@@ -82,7 +82,7 @@ class DatasetFacetsTest(unittest.TestCase):
         facets_dict = plugin.dataset_facets(self.default_facet_titles,
                                             'dataset')
 
-        self.assertEquals(facets_dict['groups'], 'Events')
+        self.assertEquals(facets_dict['groups'], 'Locations or Events')
 
     def test_facet_dict_is_left_empty(self):
         plugin = MapactioneventPlugin()

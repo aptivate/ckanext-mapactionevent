@@ -30,7 +30,7 @@ class MapactioneventPlugin(plugins.SingletonPlugin, toolkit.DefaultGroupForm):
     # IFacets
     def dataset_facets(self, facets_dict, package_type):
         if 'groups' in facets_dict:
-            facets_dict['groups'] = plugins.toolkit._('Events')
+            facets_dict['groups'] = plugins.toolkit._('Locations or Events')
 
         return facets_dict
 
