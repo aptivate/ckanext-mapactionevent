@@ -7,6 +7,7 @@ import ckan.tests.factories as factories
 import ckan.tests.helpers as helpers
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
+from ckan.plugins.toolkit import config
 
 assert_equals = nose.tools.assert_equals
 assert_true = nose.tools.assert_true
@@ -83,6 +84,7 @@ class TestEventGroupController(ControllerTestBase):
     def test_save_creates_event(self):
         app = self._get_test_app()
         env, response = _get_group_new_page(app, custom_group_type)
+        site_url = config.get('ckan.site_url')
 
         form = response.forms['group-edit']
         form['title'] = 'title'
@@ -95,7 +97,7 @@ class TestEventGroupController(ControllerTestBase):
 
         # check correct redirect
         assert_equals(response.req.url,
-                      'http://localhost/%s/test' % custom_group_type)
+                      '%s/%s/test' % (site_url, custom_group_type))
 
         # check saved ok
         group = model.Group.by_name(u'test')
